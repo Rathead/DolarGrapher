@@ -36,6 +36,7 @@ export default {
     // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
     '@nuxtjs/pwa',
+    '@nuxtjs/axios',
   ],
   /*
   ** Build configuration
@@ -50,5 +51,8 @@ export default {
   server: {
     port: 3000, // default: 3000
     host: '0.0.0.0', // default: localhost
-  }
+  },
+  axios: {
+    baseURL: "http://18.231.117.65:8000/back"
+  },
 }

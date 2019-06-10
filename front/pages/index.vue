@@ -1,68 +1,68 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        UsdGrapher
-      </h1>
-      <h2 class="subtitle">
-        Shows timeline of the USD price in CLP
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >GitHub</a>
-      </div>
+  <header>
+    <div class="text-box">
+      <h1>📈  USD price in CLP</h1>
+      <p class="mt-3">A currency timeline made with C3</p>
     </div>
-  </div>
+    <div class="graph">
+      <UsdGraph :entries="data"/>
+    </div>
+  </header>
 </template>
 
+
 <script>
-import Logo from '~/components/Logo.vue'
+import UsdGraph from '@/components/UsdGraph';
 
 export default {
+  head() {
+    return {
+      title: "Home page"
+    };
+  },
   components: {
-    Logo
+    UsdGraph
+  },
+  async asyncData( { $axios, params } ) {
+    try {
+      let data = await $axios.$get("/usd_prices/");
+      return { data };
+    } catch (e) {
+      return { data: [] };
+    }
+  },
+  data() {
+    return {
+      data: []
+    };
   }
-}
+};
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
+header {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  background-position: center;
+  background-color: #2F4F4F;
+  background-size: cover;
+  position: relative;
 }
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.text-box {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  transform: translateY(-50%);
+  color: #fff;
 }
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.text-box h1 {
+  font-family: ligther;
+  font-size: 5rem;
 }
-
-.links {
-  padding-top: 15px;
+.text-box p {
+  font-size: 2rem;
+  font-weight: lighter;
+}
+UsdGraph {
+  position: absolute;
 }
 </style>
