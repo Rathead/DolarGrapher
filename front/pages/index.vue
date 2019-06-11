@@ -5,7 +5,7 @@
       <p class="mt-3">A currency timeline made with chart.js</p>
     </div>
     <div class="graph">
-      <UsdGraph :entries="lineData" />
+      <UsdGraph :entries="resp" />
     </div>
   </header>
 </template>
@@ -23,18 +23,20 @@ export default {
   components: {
     UsdGraph
   },
+
   async asyncData( { $axios, params } ) {
     try {
       let response = await $axios.$get("/usd_prices/");
 
-      return { lineData: response };
+      return { resp: response };
     } catch (e) {
-      return { lineData: [] };
+      return { resp: [] };
     }
   },
-  data() {
+/*  data() {
     return { lineData: [] };
   }
+*/
 };
 </script>
 
