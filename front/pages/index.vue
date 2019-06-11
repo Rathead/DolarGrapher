@@ -2,10 +2,10 @@
   <header>
     <div class="text-box">
       <h1>📈  USD price in CLP</h1>
-      <p class="mt-3">A currency timeline made with C3</p>
+      <p class="mt-3">A currency timeline made with chart.js</p>
     </div>
     <div class="graph">
-      <UsdGraph :entries="data"/>
+      <UsdGraph :entries="lineData" />
     </div>
   </header>
 </template>
@@ -25,16 +25,15 @@ export default {
   },
   async asyncData( { $axios, params } ) {
     try {
-      let data = await $axios.$get("/usd_prices/");
-      return { data };
+      let response = await $axios.$get("/usd_prices/");
+
+      return { lineData: response };
     } catch (e) {
-      return { data: [] };
+      return { lineData: [] };
     }
   },
   data() {
-    return {
-      data: []
-    };
+    return { lineData: [] };
   }
 };
 </script>
@@ -62,7 +61,13 @@ header {
   font-size: 2rem;
   font-weight: lighter;
 }
-UsdGraph {
+.graph {
   position: absolute;
+  padding: 2vh;
+  top: 25%;
+  left: 10%;
+  background: rgba(255, 255, 255, 0.7);
+  width: 70vh;
+  height: 35vh;
 }
 </style>
